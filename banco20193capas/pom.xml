@@ -91,6 +91,7 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.8</version>
 				<configuration>
+					<targetJdk>1.8</targetJdk>
 					<rulesets>
 						<ruleset>/rulesets/java/basic.xml</ruleset>
 						<ruleset>/rulesets/java/imports.xml</ruleset>

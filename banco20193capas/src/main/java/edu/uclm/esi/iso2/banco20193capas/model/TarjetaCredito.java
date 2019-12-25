@@ -22,7 +22,7 @@ public class TarjetaCredito extends Tarjeta {
 	 * Permite sacar dinero del cajero automático
 	 * @param pin	El pin que introduce el usuario
 	 * @param importe	El {@code importe} que desea sacar
-	 * @throws ImporteInvalidoException	Si el {@code importe<=0}
+	 * @throws ImporteInvalidoException	Si el {@code importe menor o igual que 0}
 	 * @throws SaldoInsuficienteException	Si el crédito disponible de la tarjeta es menor que el importe
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es distinto del pin de la tarjeta
@@ -49,8 +49,8 @@ public class TarjetaCredito extends Tarjeta {
 	 * @return	Un token que debe introducirse en {@link #confirmarCompraPorInternet(int)}
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es distinto del pin de la tarjeta
-	 * @throws SaldoInsuficienteException	Si el crédito disponible de la tarjeta ({@link #get}) es menor que el importe
-	 * @throws ImporteInvalidoException	Si el importe<=0
+	 * @throws SaldoInsuficienteException	Si el crédito disponible de la tarjeta ({@link #getCreditoDisponible()}) es menor que el importe
+	 * @throws ImporteInvalidoException	Si el importe menor o igual que 0
 	 */
 	@Override
 	public Integer comprarPorInternet(int pin, double importe) throws TarjetaBloqueadaException, PinInvalidoException, SaldoInsuficienteException, ImporteInvalidoException {
@@ -73,7 +73,7 @@ public class TarjetaCredito extends Tarjeta {
 	 * Permite hacer un compra en un comercio
 	 * @param pin	El pin que introduce el usuario
 	 * @param importe	El importe de la compra
-	 * @throws ImporteInvalidoException	Si el importe<=0
+	 * @throws ImporteInvalidoException	Si el importemenor o igual que 0
 	 * @throws SaldoInsuficienteException	Si el crédito disponible ({@link #getCreditoDisponible()}) de la tarjeta es menor que el importe
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es incorrecto

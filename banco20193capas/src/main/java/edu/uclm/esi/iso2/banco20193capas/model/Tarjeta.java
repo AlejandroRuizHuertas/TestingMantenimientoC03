@@ -19,7 +19,7 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.TokenInvalidoException;
 
 /**
  * Representa una tarjeta bancaria, bien de débito o bien de crédito.
- * Una {@code Tarjeta} está asociada a un {@code Cliente} y a una {@Cuenta}.
+ * Una {@code Tarjeta} está asociada a un {@code Cliente} y a una {@code Cuenta}.
  * 
  */
 @Entity
@@ -65,7 +65,7 @@ public abstract class Tarjeta {
 	 * Permite confirmar una compra que se ha iniciado por Internet. El método {@link #comprarPorInternet(int, double)} devuelve un token que debe ser introducido en este método.
 	 * @param token	El token que introduce el usuario. Para que la compra se confirme, ha de coincidir con el token devuelto por {@link #comprarPorInternet(int, double)}
 	 * @throws TokenInvalidoException	Si el {@code token} introducido es distinto del recibido desde {@link #comprarPorInternet(int, double)}
-	 * @throws ImporteInvalidoException	 Si el importe<=0
+	 * @throws ImporteInvalidoException	 Si el importe menor o igual que 0
 	 * @throws SaldoInsuficienteException	Si el saldo de la cuenta asociada a la tarjeta (en el caso de {@link TarjetaDebito}) es menor que el importe, o 
 	 * 									si el crédito disponible en la tarjeta de crédito es menor que el importe	
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada

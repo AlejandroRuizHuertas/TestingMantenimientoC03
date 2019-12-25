@@ -16,7 +16,7 @@ public class TarjetaDebito extends Tarjeta {
 	 * Permite sacar dinero del cajero automático
 	 * @param pin	El pin que introduce el usuario
 	 * @param importe	El {@code importe} que desea sacar
-	 * @throws ImporteInvalidoException	Si el {@code importe<=0}
+	 * @throws ImporteInvalidoException	Si el {@code importe menor o igual que 0}
 	 * @throws SaldoInsuficienteException	Si el saldo de la cuenta asociada ({@link edu.uclm.esi.iso2.banco20193capas.model.Cuenta#getSaldo() Cuenta.getSaldo()}) a la tarjeta es menor que el importe
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es distinto del pin de la tarjeta
@@ -36,7 +36,7 @@ public class TarjetaDebito extends Tarjeta {
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es distinto del pin de la tarjeta
 	 * @throws SaldoInsuficienteException	Si el saldo de la cuenta asociada a la tarjeta es menor que el importe 
-	 * @throws ImporteInvalidoException	Si el importe<=0
+	 * @throws ImporteInvalidoException	Si el importe menor o igual que 0
 	 */
 	@Override
 	public Integer comprarPorInternet(int pin, double importe) throws TarjetaBloqueadaException, PinInvalidoException, SaldoInsuficienteException, ImporteInvalidoException {
@@ -55,7 +55,7 @@ public class TarjetaDebito extends Tarjeta {
 	 * Permite hacer un compra en un comercio
 	 * @param pin	El pin que introduce el usuario
 	 * @param importe	El importe de la compra
-	 * @throws ImporteInvalidoException	Si el importe<=0
+	 * @throws ImporteInvalidoException	Si el importe menor o igual que 0
 	 * @throws SaldoInsuficienteException	Si el saldo de la cuenta asociada ({@link Cuenta#getSaldo()}) a la tarjeta es menor que el importe 
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es incorrecto
