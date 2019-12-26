@@ -108,9 +108,10 @@ public class TarjetaCredito extends Tarjeta {
 	}
 	
 	public void liquidar() {
-		gastos = 0.0;
-	    mmv = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.id);
-		for (final MovimientoTarjetaCredito m : mmv) {
+		double gastos = 0.0;
+		List<MovimientoTarjetaCredito> mm = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.identificador);
+		for (MovimientoTarjetaCredito m : mm) {
+
 			if (!m.isLiquidado()) {
 				gastos = gastos+m.getImporte();
 				m.setLiquidado(true);
@@ -129,6 +130,7 @@ public class TarjetaCredito extends Tarjeta {
 		mmv = Manager.getMovimientoTarjetaCreditoDAO().findByTarjetaId(this.id);
 		for (final MovimientoTarjetaCredito m : mmv) {
 			if (!m.isLiquidado()) {
+
 				gastos = gastos + m.getImporte();
 			}
 		}
