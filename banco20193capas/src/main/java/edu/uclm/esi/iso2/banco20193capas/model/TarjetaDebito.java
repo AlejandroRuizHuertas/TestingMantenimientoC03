@@ -11,10 +11,14 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.TarjetaBloqueadaException;
 
 @Entity
 public class TarjetaDebito extends Tarjeta {
-
+	protected int token;
+	protected final SecureRandom dado = new SecureRandom();
+	
 	public TarjetaDebito() {
 		super();
+		
 	}
+
 	/**
 	 * Permite sacar dinero del cajero automático
 	 * @param pin	El pin que introduce el usuario
@@ -24,6 +28,8 @@ public class TarjetaDebito extends Tarjeta {
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin introducido es distinto del pin de la tarjeta
 	 */
+	
+	
 	@Override
 	
 	public void sacarDinero(final int pin, final double importe) throws ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
@@ -32,6 +38,7 @@ public class TarjetaDebito extends Tarjeta {
 		this.cuenta.retirar(importe);
 	}
 
+	
 	/**
 	 * Inicia una compra por Internet, que debe confirmarse después (ver {@link #confirmarCompraPorInternet(int)}) mediante el token que devuelve este método
 	 * @param pin	El pin que introduce el usuario
@@ -46,12 +53,12 @@ public class TarjetaDebito extends Tarjeta {
 	public Integer comprarPorInternet(final int pin, final double importe) throws TarjetaBloqueadaException, PinInvalidoException, SaldoInsuficienteException, ImporteInvalidoException {
 		comprobar(pin);
 		this.intentos = 0;
-		final SecureRandom dado = new SecureRandom();
-		int token = 0;
+		token = 0;
+		
 		for (int i=0; i<=3; i++) {
 			token = (int) (token + dado.nextInt(10) * Math.pow(10, i));
 		}
-		token =  1234;
+		//token =  1234;
 		this.compra = new Compra(importe, token);
 		return token;
 	}
