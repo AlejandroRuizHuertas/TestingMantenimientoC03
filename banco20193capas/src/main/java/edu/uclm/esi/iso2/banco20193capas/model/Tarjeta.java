@@ -26,7 +26,7 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.TokenInvalidoException;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Tarjeta {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	protected Long id;
+	protected Long identificador;
 	
 	protected Integer pin;
 	protected Boolean activa;
@@ -44,20 +44,24 @@ public abstract class Tarjeta {
 	public Tarjeta() {
 		activa = true;
 		this.intentos = 0;
-		SecureRandom dado = new SecureRandom();
+		final SecureRandom dado = new SecureRandom();
 		pin = 0;
-		for (int i=0; i<=3; i++)
-			pin = (int) (pin + dado.nextInt(10) * Math.pow(10, i));	
+		for (int i=0; i<=3; i++) {
+			pin = (int) (pin + dado.nextInt(10) * Math.pow(10, i));
+		}
 	}
 	
-	protected void comprobar(int pin) throws TarjetaBloqueadaException, PinInvalidoException {
-		if (!this.isActiva())
+	protected void comprobar(final int pin) throws TarjetaBloqueadaException, PinInvalidoException {
+		if (!this.isActiva()) {
 			throw new TarjetaBloqueadaException();
+		}
 		if (this.pin!=pin) {
 			this.intentos++;
-			if (intentos == 3)
+			if (intentos == 3) {
 				bloquear();
+			}
 			throw new PinInvalidoException();
+			
 		}		
 	}
 	
@@ -71,9 +75,9 @@ public abstract class Tarjeta {
 	 * @throws TarjetaBloqueadaException	Si la tarjeta está bloqueada
 	 * @throws PinInvalidoException	Si el pin que se introdujo es inválido
 	 */
-	public void confirmarCompraPorInternet(int token) throws TokenInvalidoException, ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
+	public void confirmarCompraPorInternet(final int token) throws TokenInvalidoException, ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
 		if (token!=this.compra.getToken()) {
-			this.compra = null;
+			//this.compra = null;
 			throw new TokenInvalidoException();
 		}
 		this.comprar(this.pin, this.compra.getImporte());
@@ -82,18 +86,18 @@ public abstract class Tarjeta {
 	protected abstract void bloquear();
 
 	public Long getId() {
-		return id;
+		return identificador;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(final Long identificador) {
+		this.identificador = identificador;
 	}
 
 	public Integer getPin() {
 		return pin;
 	}
 
-	public void setPin(Integer pin) {
+	public void setPin(final Integer pin) {
 		this.pin = pin;
 	}
 
@@ -101,7 +105,7 @@ public abstract class Tarjeta {
 		return titular;
 	}
 
-	public void setTitular(Cliente titular) {
+	public void setTitular(final Cliente titular) {
 		this.titular = titular;
 	}
 
@@ -109,7 +113,7 @@ public abstract class Tarjeta {
 		return cuenta;
 	}
 
-	public void setCuenta(Cuenta cuenta) {
+	public void setCuenta(final Cuenta cuenta) {
 		this.cuenta = cuenta;
 	}
 
@@ -121,7 +125,7 @@ public abstract class Tarjeta {
 		return activa;
 	}
 
-	public void setActiva(Boolean activa) {
+	public void setActiva(final Boolean activa) {
 		this.activa = activa;
 	}
 

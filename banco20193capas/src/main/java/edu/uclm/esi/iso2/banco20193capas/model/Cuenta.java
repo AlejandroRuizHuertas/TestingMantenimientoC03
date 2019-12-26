@@ -43,7 +43,7 @@ public class Cuenta {
 	}
 
 	public Cuenta(final Integer idCuenta) {
-		this(new Long(idCuenta));
+		this(Long.valueOf(id));
 	}
 
 	/**
