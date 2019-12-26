@@ -12,6 +12,9 @@ import edu.uclm.esi.iso2.banco20193capas.exceptions.TarjetaBloqueadaException;
 @Entity
 public class TarjetaDebito extends Tarjeta {
 
+	public TarjetaDebito() {
+		super();
+	}
 	/**
 	 * Permite sacar dinero del cajero automático
 	 * @param pin	El pin que introduce el usuario
@@ -22,7 +25,8 @@ public class TarjetaDebito extends Tarjeta {
 	 * @throws PinInvalidoException	Si el pin introducido es distinto del pin de la tarjeta
 	 */
 	@Override
-	public void sacarDinero(int pin, double importe) throws ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
+	
+	public void sacarDinero(final int pin, final double importe) throws ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
 		comprobar(pin);
 		this.intentos = 0;
 		this.cuenta.retirar(importe);
@@ -39,13 +43,14 @@ public class TarjetaDebito extends Tarjeta {
 	 * @throws ImporteInvalidoException	Si el importe menor o igual que 0
 	 */
 	@Override
-	public Integer comprarPorInternet(int pin, double importe) throws TarjetaBloqueadaException, PinInvalidoException, SaldoInsuficienteException, ImporteInvalidoException {
+	public Integer comprarPorInternet(final int pin, final double importe) throws TarjetaBloqueadaException, PinInvalidoException, SaldoInsuficienteException, ImporteInvalidoException {
 		comprobar(pin);
 		this.intentos = 0;
-		SecureRandom dado = new SecureRandom();
+		final SecureRandom dado = new SecureRandom();
 		int token = 0;
-		for (int i=0; i<=3; i++)
+		for (int i=0; i<=3; i++) {
 			token = (int) (token + dado.nextInt(10) * Math.pow(10, i));
+		}
 		token =  1234;
 		this.compra = new Compra(importe, token);
 		return token;
@@ -61,7 +66,7 @@ public class TarjetaDebito extends Tarjeta {
 	 * @throws PinInvalidoException	Si el pin introducido es incorrecto
 	 */
 	@Override
-	public void comprar(int pin, double importe) throws ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
+	public void comprar(final int pin, final double importe) throws ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
 		comprobar(pin);
 		this.intentos = 0;
 		this.cuenta.retirar(importe);
@@ -74,9 +79,10 @@ public class TarjetaDebito extends Tarjeta {
 	}
 	
 	@Override
-	public void cambiarPin(int pinViejo, int pinNuevo) throws PinInvalidoException {
-		if (this.pin!=pinViejo)
+	public void cambiarPin(final int pinViejo, final int pinNuevo) throws PinInvalidoException {
+		if (this.pin!=pinViejo) {
 			throw new PinInvalidoException();
+		}
 		this.pin = pinNuevo;
 		Manager.getTarjetaDebitoDAO().save(this);
 	}
