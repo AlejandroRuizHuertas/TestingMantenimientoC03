@@ -51,11 +51,11 @@ public abstract class Tarjeta {
 		}
 	}
 	
-	protected void comprobar(final int p) throws TarjetaBloqueadaException, PinInvalidoException {
+	protected void comprobar(final int pin) throws TarjetaBloqueadaException, PinInvalidoException {
 		if (!this.isActiva()) {
 			throw new TarjetaBloqueadaException();
 		}
-		if (this.pin!=p) {
+		if (this.pin!=pin) {
 			this.intentos++;
 			if (intentos == 3) {
 				bloquear();
@@ -77,7 +77,7 @@ public abstract class Tarjeta {
 	 */
 	public void confirmarCompraPorInternet(final int token) throws TokenInvalidoException, ImporteInvalidoException, SaldoInsuficienteException, TarjetaBloqueadaException, PinInvalidoException {
 		if (token!=this.compra.getToken()) {
-			this.compra = null;
+			//this.compra = null;
 			throw new TokenInvalidoException();
 		}
 		this.comprar(this.pin, this.compra.getImporte());
@@ -89,8 +89,8 @@ public abstract class Tarjeta {
 		return identificador;
 	}
 
-	public void setId(final Long id) {
-		this.identificador = id;
+	public void setId(final Long identificador) {
+		this.identificador = identificador;
 	}
 
 	public Integer getPin() {
@@ -125,7 +125,7 @@ public abstract class Tarjeta {
 		return activa;
 	}
 
-	public void setActiva(Boolean activa) {
+	public void setActiva(final Boolean activa) {
 		this.activa = activa;
 	}
 
